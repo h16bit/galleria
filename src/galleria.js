@@ -1236,15 +1236,10 @@ Galleria = function() {
             var w = 0,
                 h = 0,
                 hooks = [0],
-                tumbWidth = 0,
-                tumbCnt = self.$( 'thumbnails-container' ),
-                tumbList = self.$( 'thumbnails-list' ),
-                tumbCntWidth = tumbCnt.width(),
-                tumbListWidth = tumbList.width();
+                cntWidth = self.$( 'thumbnails-container' );
 
             $.each( self._thumbnails, function( i, thumb ) {
                 if ( thumb.ready ) {
-                    tumbWidth = thumb.outerWidth;
                     w += thumb.outerWidth || $( thumb.container ).outerWidth( true );
                     hooks[ i+1 ] = w;
                     h = Math.max( h, thumb.outerHeight || $( thumb.container).outerHeight( true ) );
@@ -1258,14 +1253,13 @@ Galleria = function() {
 
             carousel.max = w;
             carousel.hooks = hooks;
-            carousel.width = tumbListWidth;
+            carousel.width = self.$( 'thumbnails-list' ).width();
             carousel.setClasses();
 
-            tumbCnt.toggleClass( 'galleria-carousel', w > carousel.width );
+            cntWidth.toggleClass( 'galleria-carousel', w > carousel.width );
 
             // one extra calculation
-            var offset =tumbCntWidth*Math.ceil(tumbCntWidth/tumbListWidth)-w;
-            carousel.width = tumbListWidth+offset-tumbWidth;
+            carousel.width = cntWidth.width();
         },
 
         bindControls: function() {
